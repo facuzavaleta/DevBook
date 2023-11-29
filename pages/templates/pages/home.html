@@ -7,7 +7,12 @@
 </head>
 <body>
     <h1>Welcome to DevBook Home</h1>
+    {% if user.is_authenticated %}
+    {{ user.username }}
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% else %}
     <a href="{% url 'login' %}"><button>Login</button></a>
     <a href="{% url 'signup' %}"><button>Signup</button></a>
+    {% endif %}
 </body>
 </html>
