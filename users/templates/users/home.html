@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+{% if authenticated_username %}
+    <h2>Perfil de {{ username }}</h2>
+{% else %}
+    <h2>Bienvenido al perfil de {{ username }}</h2>
+{% endif %}
+{% endblock %}
