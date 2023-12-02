@@ -11,7 +11,7 @@
   <p>{{ post.title }}</p>
   <blockquote>{{ post.content }}</blockquote>
   <p>{{ post.created_at }}</p>
-  <p>De: {{ post.posted_by.username }}</p>
+  <p>De: <a href="{% url 'home' username=post.posted_by.username %}">{{ post.posted_by.username }}</a></p>
   {% if post.posted_by == request.user or post.profile_owner == request.user %}
   <form action="{% url 'delete_post' post.id %}" method="post" style="display: inline;">
       {% csrf_token %}
