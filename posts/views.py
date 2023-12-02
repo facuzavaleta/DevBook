@@ -7,11 +7,11 @@ from .models import Post
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     
-    # Verificar si el usuario logueado es el propietario del post
-    if request.user == post.user:
+    # Verificar si el usuario logueado es el propietario del post o tiene permisos para eliminar
+    if request.user == post.posted_by or request.user == post.profile_owner:
         post.delete()
         messages.success(request, 'El post ha sido eliminado con éxito.')
     else:
         messages.error(request, 'No tienes permisos para eliminar este post.')
 
-    return redirect('home', username=request.user.username)
+    return redirect('home', username=post.profile_owner.username)

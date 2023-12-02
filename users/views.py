@@ -39,7 +39,7 @@ def logout_view(request):
 def home_view(request, username):
     user_profile = get_object_or_404(CustomUser, username=username)
 
-    user_posts = Post.objects.filter(profile_owner=user_profile)
+    user_posts = Post.objects.filter(profile_owner=user_profile).order_by('-created_at')
     post_form = PostForm()
 
     if request.method == 'POST':
