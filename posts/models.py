@@ -6,7 +6,8 @@ from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    profile_owner = models.ForeignKey(CustomUser, related_name='profile_owner', on_delete=models.CASCADE)
+    posted_by = models.ForeignKey(CustomUser, related_name='posted_by', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):

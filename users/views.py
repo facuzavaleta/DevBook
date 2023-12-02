@@ -39,14 +39,15 @@ def logout_view(request):
 def home_view(request, username):
     user_profile = get_object_or_404(CustomUser, username=username)
 
-    user_posts = Post.objects.filter(user=user_profile)
+    user_posts = Post.objects.filter(profile_owner=user_profile)
     post_form = PostForm()
 
     if request.method == 'POST':
         post_form = PostForm(request.POST)
         if post_form.is_valid():
             new_post = post_form.save(commit=False)
-            new_post.user = request.user  # Establecemos el usuario actual
+            new_post.posted_by = request.user
+            new_post.profile_owner = user_profile
             new_post.save()
             return redirect('home', username=username)
 

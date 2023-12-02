@@ -7,12 +7,11 @@
     <h2>Bienvenido al perfil de {{ username }}</h2>
 {% endif %}
 
-<h2>Tus Posts:</h2>
 {% for post in user_posts %}
   <p>{{ post.title }}</p>
   <blockquote>{{ post.content }}</blockquote>
   <p>{{ post.created_at }}</p>
-  <p>De: {{ post.user }}</p>
+  <p>De: {{ post.posted_by.username }}</p>
   {% if post.user == request.user %}
         <form action="{% url 'delete_post' post.id %}" method="post" style="display: inline;">
             {% csrf_token %}
