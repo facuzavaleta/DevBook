@@ -52,3 +52,13 @@ def home_view(request, username):
             return redirect('home', username=username)
 
     return render(request, 'users/home.html', {'username': username, 'user_posts': user_posts, 'post_form': post_form})
+
+def user_search(request):
+    query = request.GET.get('q')
+
+    if query:
+        results = CustomUser.objects.filter(username__icontains=query)
+    else:
+        results = None
+
+    return render(request, 'users/user_search.html', {'query': query, 'results': results})

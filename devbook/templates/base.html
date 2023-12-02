@@ -12,6 +12,10 @@
     {% if user.is_authenticated %}
     <a href="{% url 'home' username=user.username %}">{{ user.username }}</a>    
     {% endif %}
+    <form method="get" action="{% url 'user_search' %}">
+        <input type="text" name="q" placeholder="Buscar usuarios">
+        <button type="submit">Buscar</button>
+    </form>
     <p>{{ current_datetime|date:"F j, Y" }}</p>
     </nav>
     {% block page_content %}

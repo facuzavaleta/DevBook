@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <h2>Resultados de la búsqueda para '{{ query }}'</h2>
+    {% if results %}
+        <ul>
+            {% for user in results %}
+                <li><a href="{% url 'home' username=user.username %}">{{ user.username }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron resultados.</p>
+    {% endif %}
+{% endblock %}
