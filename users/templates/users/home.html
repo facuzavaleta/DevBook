@@ -6,4 +6,25 @@
 {% else %}
     <h2>Bienvenido al perfil de {{ username }}</h2>
 {% endif %}
+
+<h2>Tus Posts:</h2>
+{% for post in user_posts %}
+  <p>{{ post.title }}</p>
+  <blockquote>{{ post.content }}</blockquote>
+  <p>{{ post.created_at }}</p>
+  <p>De: {{ post.user }}</p>
+  {% if post.user == request.user %}
+        <form action="{% url 'delete_post' post.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">Eliminar</button>
+        </form>
+    {% endif %}
+{% endfor %}
+
+<h2>Crear un nuevo post:</h2>
+<form method="post" action="">
+    {% csrf_token %}
+    {{ post_form.as_p }}
+    <button type="submit">Publicar</button>
+</form>
 {% endblock %}

@@ -4,6 +4,10 @@ from django.contrib.auth import login
 from .forms import SignUpForm, UserLoginForm
 from django.contrib.auth import logout
 from .models import CustomUser
+from django.contrib.auth.decorators import login_required
+from posts.forms import PostForm
+from posts.models import Post
+from django.contrib import messages
 
 def signup_view(request):
     if request.method == 'POST':
@@ -11,7 +15,6 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            # Redirige al perfil del usuario recién registrado
             return redirect('home', username=user.username)
     else:
         form = SignUpForm()
@@ -23,7 +26,6 @@ def login_view(request):
         form = UserLoginForm(request, request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            # Redirige al perfil del usuario autenticado
             return redirect('home', username=request.user.username)
     else:
         form = UserLoginForm()
@@ -33,7 +35,19 @@ def logout_view(request):
     logout(request)
     return redirect('landing')
 
+@login_required
 def home_view(request, username):
     user_profile = get_object_or_404(CustomUser, username=username)
-    authenticated_username = request.user.username if request.user.is_authenticated else None
-    return render(request, 'users/home.html', {'username': username, 'authenticated_username': authenticated_username})
+
+    user_posts = Post.objects.filter(user=user_profile)
+    post_form = PostForm()
+
+    if request.method == 'POST':
+        post_form = PostForm(request.POST)
+        if post_form.is_valid():
+            new_post = post_form.save(commit=False)
+            new_post.user = request.user  # Establecemos el usuario actual
+            new_post.save()
+            return redirect('home', username=username)
+
+    return render(request, 'users/home.html', {'username': username, 'user_posts': user_posts, 'post_form': post_form})
