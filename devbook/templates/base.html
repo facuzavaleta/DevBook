@@ -10,7 +10,7 @@
     <nav>
     <a href="{% url 'landing' %}">DevBook</a>
     {% if user.is_authenticated %}
-    {{ user.username }}
+    <a href="{% url 'home' username=user.username %}">{{ user.username }}</a>    
     {% endif %}
     <p>{{ current_datetime|date:"F j, Y" }}</p>
     </nav>
