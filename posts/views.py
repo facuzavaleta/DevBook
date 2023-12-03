@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post
 
 @login_required
-def delete_post(request, post_id):
+def delete_post(request, username, post_id):
     post = get_object_or_404(Post, id=post_id)
     
     # Verificar si el usuario logueado es el propietario del post o tiene permisos para eliminar
@@ -14,4 +14,5 @@ def delete_post(request, post_id):
     else:
         messages.error(request, 'No tienes permisos para eliminar este post.')
 
+    # Redirige al muro de la persona cuyo post estás eliminando
     return redirect('home', username=post.profile_owner.username)
