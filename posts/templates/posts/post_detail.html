@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block page_content %}
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.content }}</p>
+  <p>{{ post.created_at }}</p>
+  <p>De: <a href="{% url 'home' username=post.posted_by.username %}">{{ post.posted_by.username }}</a></p>
+  {% if post.posted_by == request.user or post.profile_owner == request.user %}
+  <form action="{% url 'delete_post' username=post.posted_by.username post_id=post.id %}" method="post" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+  </form>
+  {% endif %}
+  
+  <h3>Comentarios:</h3>
+  {% for comment in comments %}
+    <p>{{ comment.content }}</p>
+    <p>{{ comment.created_at }}</p>
+    <p>De: {{ comment.user.username }}</p>
+  {% endfor %}
+
+  <h3>Comentar:</h3>
+
+{% endblock %}

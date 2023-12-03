@@ -11,7 +11,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
-        return reverse('home', kwargs={'username': self.user.username})
+        return reverse('post_detail', kwargs={'username': self.profile_owner.username, 'post_id': self.id})
     
     def __str__(self):
         return f'{self.title} - {self.user.username}'

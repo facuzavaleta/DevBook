@@ -8,7 +8,7 @@
 {% endif %}
 
 {% for post in user_posts %}
-  <p>{{ post.title }}</p>
+  <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>  
   <blockquote>{{ post.content }}</blockquote>
   <p>{{ post.created_at }}</p>
   <p>De: <a href="{% url 'home' username=post.posted_by.username %}">{{ post.posted_by.username }}</a></p>
