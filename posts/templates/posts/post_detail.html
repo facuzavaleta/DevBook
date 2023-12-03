@@ -8,7 +8,9 @@
   <form action="{% url 'delete_post' username=post.posted_by.username post_id=post.id %}" method="post" style="display: inline;">
     {% csrf_token %}
     <button type="submit">Eliminar</button>
-  </form>
+</form>
+
+
   {% endif %}
   
   <h2>Comentarios</h2>
@@ -17,6 +19,13 @@
     <li>
   <p>{{ comment.content }} - <a href="{% url 'home' username=comment.user.username %}">{{ comment.user.username }}</a></p>
   <p>{{ comment.created_at }}</p>
+  {% if comment.user == request.user or post.profile_owner == request.user %}
+  <form method="post" action="{% url 'delete_comment' username=post.profile_owner.username post_id=post.id comment_id=comment.id %}">
+    {% csrf_token %}
+    <button type="submit">Eliminar Comentario</button>
+</form>
+{% endif %}
+
     </li>
   </ul>
   {% endfor %}
