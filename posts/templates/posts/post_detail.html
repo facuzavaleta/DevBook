@@ -11,13 +11,20 @@
   </form>
   {% endif %}
   
-  <h3>Comentarios:</h3>
+  <h2>Comentarios</h2>
   {% for comment in comments %}
-    <p>{{ comment.content }}</p>
-    <p>{{ comment.created_at }}</p>
-    <p>De: {{ comment.user.username }}</p>
+  <ul>
+    <li>
+  <p>{{ comment.content }} - <a href="{% url 'home' username=comment.user.username %}">{{ comment.user.username }}</a></p>
+  <p>{{ comment.created_at }}</p>
+    </li>
+  </ul>
   {% endfor %}
 
   <h3>Comentar:</h3>
-
+  <form method="post" action="{% url 'post_detail' username=post.profile_owner.username post_id=post.id %}">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Agregar Comentario</button>
+  </form>
 {% endblock %}
