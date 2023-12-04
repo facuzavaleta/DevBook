@@ -1,50 +1,58 @@
 {% extends 'base.html' %}
 {% block page_content %}
 
-<!-- Informacion del post -->
-<h2>{{ post.title }}</h2>
-<p>{{ post.content }}</p>
-<p>{{ post.created_at }}</p>
-<p>De: <a href="{% url 'home' username=post.posted_by.username %}">{{ post.posted_by.username }}</a></p>
+<!-- Detalles del post -->
+<article class="post-detail">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p class="post-meta">
+        Publicado por <a href="{% url 'home' username=post.posted_by.username %}">{{ post.posted_by.username }}</a> el {{ post.created_at }}
+    </p>
 
-<!-- Boton de eliminar post (solo el autor o dueño del perfil) -->
-{% if post.posted_by == request.user or post.profile_owner == request.user %}
-    <form action="{% url 'delete_post' username=post.posted_by.username post_id=post.id %}" method="post" style="display: inline;">
-    {% csrf_token %}
-    <button type="submit">Eliminar</button>
-    </form>
-{% endif %}
-  
+    <!-- Botón de eliminar post (solo para el autor o dueño del perfil) -->
+    {% if post.posted_by == request.user or post.profile_owner == request.user %}
+        <form action="{% url 'delete_post' username=post.posted_by.username post_id=post.id %}" method="post" class="delete-post-form">
+            {% csrf_token %}
+            <button type="submit" class="delete-post-btn">Eliminar</button>
+        </form>
+    {% endif %}
+</article>
+
 <!-- Comentarios -->
-<h2>Comentarios</h2>
+<section id="comments-section">
+    <h2>Comentarios</h2>
 
-{% if comments %}
-    {% for comment in comments %}
-        <ul>
-            <li>
-                <!-- Informacion del comentario -->
-                <p>{{ comment.content }} - <a href="{% url 'home' username=comment.user.username %}">{{ comment.user.username }}</a></p>
-                <p>{{ comment.created_at }}</p>
+    {% if comments %}
+        <ul class="comment-list">
+            {% for comment in comments %}
+                <li class="comment">
+                    <!-- Detalles del comentario -->
+                    <p>{{ comment.content }} - <a href="{% url 'home' username=comment.user.username %}">{{ comment.user.username }}</a></p>
+                    <p class="comment-meta">{{ comment.created_at }}</p>
 
-                <!-- Boton de eliminar comentario (solo el autor o dueño del perfil) -->
-                {% if comment.user == request.user or post.profile_owner == request.user %}
-                    <form method="post" action="{% url 'delete_comment' username=post.profile_owner.username post_id=post.id comment_id=comment.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Eliminar Comentario</button>
-                    </form>
-                {% endif %}
-            </li>
+                    <!-- Botón de eliminar comentario (solo para el autor o dueño del perfil) -->
+                    {% if comment.user == request.user or post.profile_owner == request.user %}
+                        <form method="post" action="{% url 'delete_comment' username=post.profile_owner.username post_id=post.id comment_id=comment.id %}" class="delete-comment-form">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-comment-btn">Eliminar Comentario</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
         </ul>
-    {% endfor %}
-{% else %}
-    <p>No hay comentarios</p>
-{% endif %}
+    {% else %}
+        <p>No hay comentarios</p>
+    {% endif %}
+</section>
 
-<!-- Formulario para crear un nuevo comentario -->
-<h3>Comentar:</h3>
-    <form method="post" action="{% url 'post_detail' username=post.profile_owner.username post_id=post.id %}">
+<!-- Formulario para agregar un nuevo comentario -->
+<section id="new-comment-form">
+    <h3>Agregar Comentario:</h3>
+    <form method="post" action="{% url 'post_detail' username=post.profile_owner.username post_id=post.id %}" class="comment-form">
         {% csrf_token %}
         {{ comment_form.as_p }}
-        <button type="submit">Agregar Comentario</button>
+        <button type="submit" class="comment-btn">Comentar</button>
     </form>
+</section>
+
 {% endblock %}

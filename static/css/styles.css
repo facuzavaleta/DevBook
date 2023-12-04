@@ -1,0 +1,249 @@
+/* Reset de estilos para eliminar márgenes y rellenos predeterminados */
+body, h1, h2, h3, p, a, button, form, input {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo general del cuerpo de la página */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f6f8fa; /* Color de fondo similar al de GitHub */
+    color: #24292e; /* Color de texto principal */
+    line-height: 1.6;
+}
+
+/* Estilo de la barra de navegación */
+nav {
+    background-color: #24292e; /* Color de fondo de la barra de navegación de GitHub */
+    color: #ffffff; /* Color de texto en la barra de navegación */
+    padding: 10px 20px; /* Espaciado interno en la barra de navegación */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra en la barra de navegación */
+}
+
+nav div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav div a {
+    color: #ffffff; /* Color del texto de los enlaces en la barra de navegación */
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 600; /* Negrita en los enlaces */
+}
+
+nav div form {
+    margin-left: auto; /* Mover la barra de búsqueda hacia la derecha */
+}
+
+/* Estilo del contenedor principal */
+.container {
+    max-width: 980px; /* Máximo ancho del contenido, similar al de GitHub */
+    margin: 20px auto; /* Margen exterior para centrar el contenido */
+    background-color: #ffffff; /* Color de fondo del contenedor principal */
+    padding: 20px; /* Espaciado interno en el contenedor principal */
+    border: 1px solid #e1e4e8; /* Borde alrededor del contenedor principal */
+    border-radius: 6px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra en el contenedor principal */
+}
+
+.container h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #24292e;
+}
+
+.container h3 {
+    font-size: 24px;
+    color: #0366d6;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.container blockquote {
+    margin: 10px 0;
+    padding: 0 0 0 20px;
+    border-left: 4px solid #e1e4e8;
+    color: #586069;
+}
+
+.container p {
+    color: #586069;
+    line-height: 1.5;
+}
+
+.container a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+
+.container button {
+    background-color: #28a745; /* Color verde GitHub para todos los botones */
+    color: #ffffff;
+    padding: 10px 15px; /* Ajuste del tamaño de los botones */
+    border: none;
+    border-radius: 4px; /* Reducción de la esquina redondeada */
+    cursor: pointer;
+    font-size: 15px; /* Reducción del tamaño de la fuente */
+    transition: background-color 0.3s ease;
+}
+
+.container button:hover {
+    text-decoration: none;
+    background-color: #218838; /* Color más oscuro al hacer hover */
+}
+
+.container form {
+    margin-top: 20px;
+}
+
+.container button[type="submit"] {
+    transition: background-color 0.3s ease;
+}
+
+.container button[type="submit"]:hover {
+    text-decoration: none;
+}
+
+/* Estilos específicos para la página de inicio */
+#post-list .post {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+#post-list .post h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #0366d6;
+}
+
+#post-list .comment-count {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+#post-list .delete-post-form {
+    display: inline;
+}
+
+#post-list .delete-post-btn {
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#post-list .delete-post-btn:hover {
+    background-color: #218838;
+}
+
+#new-post-form .post-form textarea {
+    height: 120px;
+}
+
+#new-post-form .post-btn {
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 12px 18px;
+    transition: background-color 0.3s ease;
+}
+
+#new-post-form .post-btn:hover {
+    background-color: #218838;
+}
+
+/* Estilos específicos para la página de detalle del post */
+#post-detail h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #24292e;
+}
+
+#post-detail .post-meta {
+    color: #586069;
+    font-size: 14px;
+}
+
+#post-detail .delete-post-form {
+    display: inline;
+}
+
+#post-detail .delete-post-btn {
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#post-detail .delete-post-btn:hover {
+    background-color: #218838;
+}
+
+/* Sección de comentarios */
+#comments-section .comment-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#comments-section .comment {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e1e4e8;
+    padding-bottom: 15px;
+}
+
+#comments-section .comment p {
+    margin: 5px 0;
+}
+
+#comments-section .comment-meta {
+    color: #586069;
+    font-size: 14px;
+}
+
+#comments-section .delete-comment-form {
+    display: inline;
+}
+
+#comments-section .delete-comment-btn {
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+#comments-section .delete-comment-btn:hover {
+    background-color: #218838;
+}
+
+/* Formulario para agregar un nuevo comentario */
+#new-comment-form .comment-form textarea {
+    height: 100px;
+}
+
+#new-comment-form .comment-btn {
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 12px 18px;
+    transition: background-color 0.3s ease;
+}
+
+#new-comment-form .comment-btn:hover {
+    background-color: #218838;
+}

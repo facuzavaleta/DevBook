@@ -4,27 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevBook</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"> -->
 </head>
 <body>
     <nav>
-    <a href="{% url 'landing' %}">DevBook</a>
+        <div>
+            <h1><a href="{% url 'landing' %}">DevBook</a></h1>
 
-    {% if user.is_authenticated %}
-        <a href="{% url 'home' username=user.username %}">{{ user.username }}</a>    
-    {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'home' username=user.username %}">{{ user.username }}</a>    
+            {% endif %}
 
-    <form method="get" action="{% url 'user_search' %}">
-        <input type="text" name="q" placeholder="Buscar usuarios">
-        <button type="submit">Buscar</button>
-    </form>
+            <form method="get" action="{% url 'user_search' %}">
+                <input type="text" name="q" placeholder="Buscar usuarios">
+                <button type="submit">Buscar</button>
+            </form>
 
-    <p>{{ current_datetime|date:"F j, Y" }}</p>
-    
+            <p>{{ current_datetime|date:"F j, Y" }}</p>
+        </div>
     </nav>
 
-{% block page_content %}
-{% endblock %}
+    <div class="container">
+        {% block page_content %}
+        {% endblock %}
+    </div>
 
 </body>
 </html>

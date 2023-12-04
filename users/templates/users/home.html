@@ -2,32 +2,42 @@
 {% load static %}
 {% block page_content %}
 
-<!-- Mensaje de Bienvenida al perfil -->
-<h2>Perfil de {{ username }}</h2>
+<!-- Sección de bienvenida al perfil -->
+<section>
+    <h2>Perfil de {{ username }}</h2>
+</section>
 
-<!-- Posts de cada perfil -->
-{% for post in user_posts %}
-    <!-- Informacion del post -->
-    <h3><a href="{% url 'post_detail' username=post.profile_owner.username post_id=post.id %}">{{ post.title }}</a></h3>
-    <blockquote>{{ post.content }}</blockquote>
-    <p>{{ post.created_at }}</p>
-    <p>De: <a href="{% url 'home' username=post.posted_by.username %}">{{ post.posted_by.username }}</a></p>
-    <p>Comments ({{ post.comment_set.count }})</p>
+<!-- Lista de posts en el perfil -->
+<section id="post-list">
+    {% for post in user_posts %}
+        <article class="post">
+            <!-- Información del post -->
+            <h3><a href="{% url 'post_detail' username=post.profile_owner.username post_id=post.id %}">{{ post.title }}</a></h3>
+            <blockquote>{{ post.content }}</blockquote>
+            <p class="post-meta">
+                Publicado por <a href="{% url 'home' username=post.posted_by.username %}">{{ post.posted_by.username }}</a> el {{ post.created_at }}
+            </p>
+            <p class="comment-count">Comentarios ({{ post.comment_set.count }})</p>
 
-    <!-- Boton de eliminar post (solo el autor o dueño del perfil) -->
-    {% if post.posted_by == request.user or post.profile_owner == request.user %}
-    <form action="{% url 'delete_post' username=post.posted_by.username post_id=post.id %}" method="post" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit">Eliminar</button>
-    </form>
-    {% endif %}
-{% endfor %}
+            <!-- Botón de eliminar post (solo para el autor o dueño del perfil) -->
+            {% if post.posted_by == request.user or post.profile_owner == request.user %}
+                <form action="{% url 'delete_post' username=post.posted_by.username post_id=post.id %}" method="post" class="delete-post-form">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-post-btn">Eliminar</button>
+                </form>
+            {% endif %}
+        </article>
+    {% endfor %}
+</section>
 
-<!-- Formulario de nuevo post -->
-<h2>Crear un nuevo post:</h2>
-    <form method="post" action="">
+<!-- Formulario para crear un nuevo post -->
+<section id="new-post-form">
+    <h2>Crear un nuevo post:</h2>
+    <form method="post" action="" class="post-form">
         {% csrf_token %}
         {{ post_form.as_p }}
-        <button type="submit">Publicar</button>
+        <button type="submit" class="post-btn">Publicar</button>
     </form>
+</section>
+
 {% endblock %}
