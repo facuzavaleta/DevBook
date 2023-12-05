@@ -3,11 +3,6 @@
 
 {% if is_owner %}
     <h1>Mis proyectos</h1>
-    <form method="post" action="" class="project-form">
-        {% csrf_token %}
-        {{ project_form.as_p }}
-        <button type="submit" class="comment-btn">Crear</button>
-    </form>
 {% else %}
     <h1>{{ username }} Projects Index</h1>
 {% endif %}
@@ -15,11 +10,17 @@
 {% if user_projects %}
     <ul>
         {% for project in user_projects %}
-            <li>{{ project }}</li>
+            <li><a href="{% url 'project_detail' username=username project_id=project.id %}">{{ project.title }}</a></li>
         {% endfor %}
     </ul>
 {% else %}
     <p>No projects created</p>
 {% endif %}
+
+<form method="post" action="" class="project-form">
+    {% csrf_token %}
+    {{ project_form.as_p }}
+    <button type="submit" class="comment-btn">Crear</button>
+</form>
 
 {% endblock %}

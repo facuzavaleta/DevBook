@@ -9,7 +9,7 @@ from users.models import CustomUser
 def post_detail(request, username, post_id):
     user_profile = get_object_or_404(CustomUser, username=username)
     post = get_object_or_404(Post, id=post_id, profile_owner=user_profile)
-    comments = Comment.objects.filter(post=post)
+    comments = Comment.objects.filter(post=post).order_by('created_at')
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)

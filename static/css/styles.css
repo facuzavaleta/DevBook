@@ -316,3 +316,69 @@ nav div form {
 #new-comment-form .comment-btn:hover {
     background-color: #218838;
 }
+
+/* Estilos generales para el formulario */
+.project-form {
+    max-width: 400px; /* Ajusta el ancho máximo según tu diseño */
+    margin: auto; /* Centra el formulario en la página */
+}
+
+/* Estilos para los campos del formulario */
+.project-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.project-form input,
+.project-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Estilos para el botón de enviar */
+.comment-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-btn:hover {
+    background-color: #45a049;
+}
+
+.code-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.code-btn:hover {
+    background-color: #45a049;
+}
+
+.enter-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.enter-btn:hover {
+    background-color: #45a049;
+}
+
+li .code-btn a,
+li .enter-btn a {
+    text-decoration: none;
+    color: inherit;
+}
