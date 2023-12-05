@@ -4,6 +4,7 @@
 
 <body>
     <h1>Welcome to DevBook</h1>
+    <p class="slogan">Connecting Developers Worldwide</p>
     {% if user.is_authenticated %}
     <a href="{% url 'logout' %}"><button>Logout</button></a>
     {% else %}

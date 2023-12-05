@@ -39,6 +39,14 @@ nav div form {
 }
 
 /* Estilo del contenedor principal */
+.slogan {
+    font-size: 18px;
+    color: #0366d6; /* GitHub link color */
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
 .container {
     max-width: 980px; /* Máximo ancho del contenido, similar al de GitHub */
     margin: 20px auto; /* Margen exterior para centrar el contenido */
@@ -148,14 +156,55 @@ nav div form {
     background-color: #218838;
 }
 
+#new-post-form {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#new-post-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#new-post-form .post-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#new-post-form .form-group {
+    margin-bottom: 15px;
+}
+
+#new-post-form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
 #new-post-form .post-form textarea {
     height: 120px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border-color 0.3s ease; /* Añadido para la transición del color de borde */
+}
+
+#new-post-form .post-form textarea:focus {
+    border-color: #6c757d;
 }
 
 #new-post-form .post-btn {
     background-color: #28a745;
     color: #ffffff;
     padding: 12px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -234,7 +283,7 @@ nav div form {
 
 /* Formulario para agregar un nuevo comentario */
 #new-comment-form .comment-form textarea {
-    height: 100px;
+    height: 50px;
 }
 
 #new-comment-form .comment-btn {
