@@ -120,6 +120,26 @@ nav div form {
 }
 
 /* Estilos específicos para la página de inicio */
+/* .profile_welcome {
+    margin-bottom: 20px;
+} */
+
+.profile_welcome h2 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.profile_welcome .projects-btn {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+.profile_welcome .projects-btn:hover {
+    background-color: #218838;
+}
+
 #post-list .post {
     margin-bottom: 30px;
     padding: 20px;

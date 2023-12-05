@@ -4,7 +4,9 @@
 
 <!-- Sección de bienvenida al perfil -->
 <section>
-    <h2>Perfil de {{ username }}</h2>
+    <div class="profile_welcome">
+    <h2>Perfil de {{ username }}</h2><a href="{% url 'projects_index' username=username %}"><button class="projects-btn">Projects</button></a>
+    </div>
 </section>
 
 <!-- Lista de posts en el perfil -->

@@ -8,4 +8,5 @@ urlpatterns = [
     path('search/', user_search, name='user_search'),
     path('<str:username>/', home_view, name='home'),
     path('<str:username>/posts/', include('posts.urls')),
+    path('<str:username>/projects/', include('projects.urls')),
 ]
