@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block page_content %}
 <div class="project-detail-container">
-    <h1>{{ project.title }}</h1>
+    <h1>{{ project.title }}</h1> 
     <blockquote>{{ project.description }}</blockquote>
     <div class="project-buttons">
         <button class="code-btn"><a href="{{ project.repository_link }}" target="_blank">CODE</a></button>
         <button class="enter-btn"><a href="{{ project.link }}" target="_blank">ENTER</a></button>
+        {% if project.user == request.user %}
         <button class="enter-btn"><a href="{% url 'edit_project' username=username project_id=project.id %}">Edit Project</a></button>
-
+        <button class="enter-btn"><a href="{% url 'delete_project' username=username project_id=project.id %}">Delete Project</a></button>
+        {% endif %}
     </div>
     <hr>
     <div class="project-details">

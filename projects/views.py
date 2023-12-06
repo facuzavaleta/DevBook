@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from .models import Project, ProjectComment
 from users.models import CustomUser
 from .forms import ProjectForm, ProjectCommentForm
@@ -27,7 +28,6 @@ def create_project(request, username):
     return render(request, 'projects/create_project.html', {'project_form': project_form})
 
 def project_detail(request, username, project_id):
-    user = get_object_or_404(CustomUser, username=username)
     project = get_object_or_404(Project, id=project_id, user__username=username)
     comments = ProjectComment.objects.filter(project=project).order_by('created_at')
 
@@ -42,7 +42,7 @@ def project_detail(request, username, project_id):
     else:
         projectcomment_form = ProjectCommentForm()
 
-    return render(request, 'projects/project_detail.html', {'user': user, 'project': project, 'comments': comments, 'username': username, 'projectcomment_form': projectcomment_form})
+    return render(request, 'projects/project_detail.html', {'project': project, 'comments': comments, 'username': username, 'projectcomment_form': projectcomment_form})
 
 def edit_project(request, username, project_id):
     user = get_object_or_404(CustomUser, username=username)
@@ -57,3 +57,14 @@ def edit_project(request, username, project_id):
         project_form = ProjectForm(instance=project)
 
     return render(request, 'projects/edit_project.html', {'user': user, 'project_form': project_form})
+
+def delete_project(request, username, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.user == project.user:
+        project.delete()
+        messages.success(request, 'El post ha sido eliminado con éxito.')
+    else:
+        messages.error(request, 'No tienes permisos para eliminar este post.')
+
+    return redirect('projects_index', username=username)
