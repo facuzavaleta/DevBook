@@ -3,6 +3,7 @@ body, h1, h2, h3, p, a, button, form, input {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 /* Estilo general del cuerpo de la página */

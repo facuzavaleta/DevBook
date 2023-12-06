@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Project, ProjectComment
 from users.models import CustomUser
-from .forms import ProjectForm
+from .forms import ProjectForm, ProjectCommentForm
 
 # Create your views here.
 def projects_index(request, username):
@@ -21,6 +21,8 @@ def create_project(request, username):
             new_project.user = request.user
             new_project.save()
             return redirect('projects_index', username=request.user.username)
+        else:
+            project_form = ProjectForm()
 
     return render(request, 'projects/create_project.html', {'project_form': project_form})
 
@@ -29,7 +31,18 @@ def project_detail(request, username, project_id):
     project = get_object_or_404(Project, id=project_id, user__username=username)
     comments = ProjectComment.objects.filter(project=project).order_by('created_at')
 
-    return render(request, 'projects/project_detail.html', {'user': user, 'project': project, 'comments': comments, 'username': username})
+    if request.method == 'POST':
+        projectcomment_form = ProjectCommentForm(request.POST)
+        if projectcomment_form.is_valid():
+            new_projectcomment = projectcomment_form.save(commit=False)
+            new_projectcomment.user = request.user
+            new_projectcomment.project = project
+            new_projectcomment.save()
+            return redirect('project_detail', username=username, project_id=project_id)
+    else:
+        projectcomment_form = ProjectCommentForm()
+
+    return render(request, 'projects/project_detail.html', {'user': user, 'project': project, 'comments': comments, 'username': username, 'projectcomment_form': projectcomment_form})
 
 def edit_project(request, username, project_id):
     user = get_object_or_404(CustomUser, username=username)
