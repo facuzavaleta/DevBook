@@ -431,3 +431,24 @@ li .enter-btn a,
 .project-card .comment-btn {
     margin: 20px;
 }
+
+/* Estilo del footer */
+footer {
+    background-color: #24292e; /* Color de fondo similar al de la barra de navegación de GitHub */
+    color: #ffffff; /* Color del texto en el footer */
+    padding: 10px 20px; /* Espaciado interno en el footer */
+    text-align: center;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra en el footer */
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Añadir un poco de espacio adicional para evitar solapamientos */
+.container {
+    margin-bottom: 60px; /* Ajusta este valor según sea necesario */
+}
