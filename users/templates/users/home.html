@@ -5,7 +5,9 @@
 <!-- Sección de bienvenida al perfil -->
 <section>
     <div class="profile_welcome">
-    <h2>Perfil de {{ username }}</h2><a href="{% url 'projects_index' username=username %}"><button class="projects-btn">Projects</button></a>
+    <h2>Perfil de {{ username }}</h2>
+    <a href="{% url 'projects_index' username=username %}"><button class="projects-btn">Projects</button></a>
+    <a href="{% url 'user_detail' username=username %}"><button class="projects-btn">Detail</button></a>
     </div>
 </section>
 

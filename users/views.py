@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import login
-from .forms import SignUpForm, UserLoginForm
+from .forms import SignUpForm, UserLoginForm, EditProfileForm
 from django.contrib.auth import logout
 from .models import CustomUser
 from django.contrib.auth.decorators import login_required
@@ -25,7 +25,7 @@ def home_view(request, username):
             new_post.save()
             return redirect('home', username=username)
 
-    return render(request, 'users/home.html', {'username': username, 'user_posts': user_posts, 'post_form': post_form})
+    return render(request, 'users/home.html', {'username': username, 'user_posts': user_posts, 'post_form': post_form, 'user_profile': user_profile})
 
 def signup_view(request):
     if request.method == 'POST':
@@ -62,3 +62,22 @@ def user_search(request):
         results = None
 
     return render(request, 'users/user_search.html', {'query': query, 'results': results})
+
+@login_required
+def user_detail(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    return render(request, 'users/user_detail.html', {'user': user, 'username': username})
+
+@login_required
+def edit_user(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user_detail', username=username)
+    else:
+        form = EditProfileForm(instance=user)
+
+    return render(request, 'users/edit_user.html', {'form': form, 'user': user, 'username': username})
