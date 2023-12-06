@@ -18,13 +18,19 @@
     </div>
 </div>
 <h2>Comentarios:</h2>
-{% if comments %}
+{% if projectcomments %}
     <ul>
-    {% for comment in comments %}
+    {% for projectcomment in projectcomments %}
         <li>
-            <p>{{ comment.content }} - <a href="{% url 'home' username=comment.user.username %}">{{ comment.user.username }}</a></p>
-            <p class="comment-meta">{{ comment.created_at }}</p>
+            <p>{{ projectcomment.content }} - <a href="{% url 'home' username=projectcomment.user.username %}">{{ projectcomment.user.username }}</a></p>
+            <p class="comment-meta">{{ projectcomment.created_at }}</p>
         </li>
+        {% if projectcomment.user == request.user %}
+        <form method="post" action="{% url 'delete_projectcomment' username=username project_id=project.id projectcomment_id=projectcomment.id %}" class="delete-comment-form">
+            {% csrf_token %}
+            <button type="submit" class="delete-comment-btn">Eliminar Comentario</button>
+        </form>
+    {% endif %}
     {% endfor %}
     </ul>
 {% else %}

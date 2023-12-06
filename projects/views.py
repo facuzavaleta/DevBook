@@ -8,7 +8,7 @@ from .forms import ProjectForm, ProjectCommentForm
 def projects_index(request, username):
     user = get_object_or_404(CustomUser, username=username)
     is_owner = request.user == user
-    user_projects = Project.objects.filter(user__username=username)
+    user_projects = Project.objects.filter(user__username=username).order_by('-created_at')
 
     return render(request, 'projects/projects_index.html', {'username': username, 'is_owner': is_owner, 'user_projects': user_projects})
 
@@ -29,7 +29,7 @@ def create_project(request, username):
 
 def project_detail(request, username, project_id):
     project = get_object_or_404(Project, id=project_id, user__username=username)
-    comments = ProjectComment.objects.filter(project=project).order_by('created_at')
+    projectcomments = ProjectComment.objects.filter(project=project).order_by('created_at')
 
     if request.method == 'POST':
         projectcomment_form = ProjectCommentForm(request.POST)
@@ -42,7 +42,7 @@ def project_detail(request, username, project_id):
     else:
         projectcomment_form = ProjectCommentForm()
 
-    return render(request, 'projects/project_detail.html', {'project': project, 'comments': comments, 'username': username, 'projectcomment_form': projectcomment_form})
+    return render(request, 'projects/project_detail.html', {'project': project, 'projectcomments': projectcomments, 'username': username, 'projectcomment_form': projectcomment_form})
 
 def edit_project(request, username, project_id):
     user = get_object_or_404(CustomUser, username=username)
@@ -68,3 +68,14 @@ def delete_project(request, username, project_id):
         messages.error(request, 'No tienes permisos para eliminar este post.')
 
     return redirect('projects_index', username=username)
+
+def delete_projectcomment(request, username, project_id, projectcomment_id):
+    projectcomment = get_object_or_404(ProjectComment, id=projectcomment_id, project__id=project_id)
+
+    if request.user == projectcomment.user:
+        projectcomment.delete()
+        messages.success(request, 'El comentario ha sido eliminado con éxito.')
+    else:
+        messages.error(request, 'No tienes permisos para eliminar este comentario.')
+
+    return redirect('project_detail', username=username, project_id=project_id)
