@@ -5,7 +5,7 @@ from .models import Post, Comment
 from .forms import CommentForm
 from users.models import CustomUser
 
-@login_required
+@login_required(login_url='login')
 def post_detail(request, username, post_id):
     user_profile = get_object_or_404(CustomUser, username=username)
     post = get_object_or_404(Post, id=post_id, profile_owner=user_profile)
@@ -24,7 +24,7 @@ def post_detail(request, username, post_id):
 
     return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments, 'comment_form': comment_form})
 
-@login_required
+@login_required(login_url='login')
 def delete_post(request, username, post_id):
     post = get_object_or_404(Post, id=post_id)
     
@@ -36,7 +36,7 @@ def delete_post(request, username, post_id):
 
     return redirect('home', username=post.profile_owner.username)
 
-@login_required
+@login_required(login_url='login')
 def delete_comment(request, username, post_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id, post__id=post_id)
 

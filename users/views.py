@@ -9,7 +9,7 @@ from posts.forms import PostForm
 from posts.models import Post
 from django.contrib import messages
 
-@login_required
+@login_required(login_url='login')
 def home_view(request, username):
     user_profile = get_object_or_404(CustomUser, username=username)
 
@@ -63,12 +63,12 @@ def user_search(request):
 
     return render(request, 'users/user_search.html', {'query': query, 'results': results})
 
-@login_required
+@login_required(login_url='login')
 def user_detail(request, username):
     user = get_object_or_404(CustomUser, username=username)
     return render(request, 'users/user_detail.html', {'user': user, 'username': username})
 
-@login_required
+@login_required(login_url='login')
 def edit_user(request, username):
     user = get_object_or_404(CustomUser, username=username)
 

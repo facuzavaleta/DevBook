@@ -6,7 +6,7 @@ from .forms import ProjectForm, ProjectCommentForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-@login_required
+@login_required(login_url='login')
 def projects_index(request, username):
     user = get_object_or_404(CustomUser, username=username)
     is_owner = request.user == user
@@ -14,7 +14,7 @@ def projects_index(request, username):
 
     return render(request, 'projects/projects_index.html', {'username': username, 'is_owner': is_owner, 'user_projects': user_projects})
 
-@login_required
+@login_required(login_url='login')
 def create_project(request, username):
     project_form = ProjectForm()
 
@@ -30,7 +30,7 @@ def create_project(request, username):
 
     return render(request, 'projects/create_project.html', {'project_form': project_form})
 
-@login_required
+@login_required(login_url='login')
 def project_detail(request, username, project_id):
     project = get_object_or_404(Project, id=project_id, user__username=username)
     projectcomments = ProjectComment.objects.filter(project=project).order_by('created_at')
@@ -48,7 +48,7 @@ def project_detail(request, username, project_id):
 
     return render(request, 'projects/project_detail.html', {'project': project, 'projectcomments': projectcomments, 'username': username, 'projectcomment_form': projectcomment_form})
 
-@login_required
+@login_required(login_url='login')
 def edit_project(request, username, project_id):
     user = get_object_or_404(CustomUser, username=username)
     project = get_object_or_404(Project, id=project_id, user__username=username)
@@ -63,7 +63,7 @@ def edit_project(request, username, project_id):
 
     return render(request, 'projects/edit_project.html', {'user': user, 'project_form': project_form})
 
-@login_required
+@login_required(login_url='login')
 def delete_project(request, username, project_id):
     project = get_object_or_404(Project, id=project_id)
 
@@ -75,7 +75,7 @@ def delete_project(request, username, project_id):
 
     return redirect('projects_index', username=username)
 
-@login_required
+@login_required(login_url='login')
 def delete_projectcomment(request, username, project_id, projectcomment_id):
     projectcomment = get_object_or_404(ProjectComment, id=projectcomment_id, project__id=project_id)
 
