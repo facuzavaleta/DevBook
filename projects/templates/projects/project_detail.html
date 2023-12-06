@@ -6,6 +6,8 @@
     <div class="project-buttons">
         <button class="code-btn"><a href="{{ project.repository_link }}" target="_blank">CODE</a></button>
         <button class="enter-btn"><a href="{{ project.link }}" target="_blank">ENTER</a></button>
+        <button class="enter-btn"><a href="{% url 'edit_project' username=username project_id=project.id %}">Edit Project</a></button>
+
     </div>
     <hr>
     <div class="project-details">

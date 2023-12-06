@@ -2,25 +2,29 @@
 {% block page_content %}
 
 {% if is_owner %}
-    <h1>Mis proyectos</h1>
+    <div class="my-projects">
+        <h1>Mis proyectos</h1>
+        <button class="enter-btn"><a href="{% url 'create_project' username=username %}">Create New Project</a></button>
+    </div>
 {% else %}
     <h1>{{ username }} Projects Index</h1>
 {% endif %}
 
 {% if user_projects %}
-    <ul>
+<div class="user-projects">
+    <ul class="project-grid">
         {% for project in user_projects %}
-            <li><a href="{% url 'project_detail' username=username project_id=project.id %}">{{ project.title }}</a></li>
+            <li>
+                <div class="project-card">
+                    <button class="comment-btn"><a href="{% url 'project_detail' username=username project_id=project.id %}">{{ project.title }}</a></button>
+                </div>
+            </li>
         {% endfor %}
     </ul>
+</div>
+
 {% else %}
     <p>No projects created</p>
 {% endif %}
-
-<form method="post" action="" class="project-form">
-    {% csrf_token %}
-    {{ project_form.as_p }}
-    <button type="submit" class="comment-btn">Crear</button>
-</form>
 
 {% endblock %}

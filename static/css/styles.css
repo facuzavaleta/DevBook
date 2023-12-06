@@ -338,32 +338,8 @@ nav div form {
 }
 
 /* Estilos para el botón de enviar */
-.comment-btn {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.comment-btn:hover {
-    background-color: #45a049;
-}
-
-.code-btn {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.code-btn:hover {
-    background-color: #45a049;
-}
-
+.comment-btn,
+.code-btn,
 .enter-btn {
     background-color: #4caf50;
     color: white;
@@ -371,14 +347,86 @@ nav div form {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none; /* Para asegurar que no haya subrayado */
+    display: inline-block; /* Para corregir el espacio adicional en algunos navegadores */
 }
 
+.comment-btn:hover,
+.code-btn:hover,
 .enter-btn:hover {
     background-color: #45a049;
 }
 
+/* Estilos específicos para los enlaces dentro de los botones en listas */
 li .code-btn a,
 li .enter-btn a {
-    text-decoration: none;
     color: inherit;
+}
+
+.my-projects {
+    display: flex;
+    align-items: center;
+}
+
+.my-projects h1 {
+    margin-right: 10px;  /* Ajusta este valor según tu preferencia */
+}
+
+li .code-btn a,
+li .enter-btn a,
+.my-projects button a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.user-projects{
+    display: grid;
+}
+
+.user-projects button a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.user-projects {
+    margin: 20px 0;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ajusta el valor mínimo y máximo según sea necesario */
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.project-card {
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-btn {
+    width: calc(100% - 14%); /* Resta 30px para dejar espacio en ambos lados del botón */
+    background-color: #4caf50;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 20px; /* Ajusta este valor según sea necesario */
+    transition: background-color 0.3s ease;
+}
+
+.comment-btn:hover {
+    background-color: #45a049;
+}
+
+/* Ajusta el padding de la tarjeta según sea necesario */
+.project-card .comment-btn {
+    margin: 20px;
 }
