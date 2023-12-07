@@ -8,15 +8,25 @@ from django.contrib.auth.decorators import login_required
 from posts.forms import PostForm
 from posts.models import Post
 from django.contrib import messages
+from django.db.models import Q
 
 @login_required(login_url='login')
 def home_view(request, username):
     user_profile = get_object_or_404(CustomUser, username=username)
-    user_posts = Post.objects.filter(profile_owner=user_profile).order_by('-created_at')
+
+    if user_profile == request.user:
+        # Si el usuario está viendo su propio perfil, mostrar sus propios posts y los de los usuarios seguidos
+        posts = Post.objects.filter(
+            Q(profile_owner=user_profile, posted_by=user_profile) | Q(profile_owner__in=user_profile.following.all())
+        ).order_by('-created_at')
+    else:
+        # Si el usuario está viendo el perfil de otro usuario, mostrar solo los posts de ese usuario
+        posts = Post.objects.filter(profile_owner=user_profile, posted_by=user_profile).order_by('-created_at')
+
     post_form = PostForm()
 
     # Agregamos el manejo de seguir/dejar de seguir
-    is_following = request.user in user_profile.followers.all()
+    is_following = request.user.is_authenticated and request.user in user_profile.followers.all()
     followers = user_profile.followers.all()
 
     if request.method == 'POST':
@@ -30,7 +40,7 @@ def home_view(request, username):
 
     return render(request, 'users/home.html', {
         'username': username,
-        'user_posts': user_posts,
+        'posts': posts,
         'post_form': post_form,
         'user_profile': user_profile,
         'is_following': is_following,

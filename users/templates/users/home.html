@@ -30,16 +30,19 @@
     <h3>Followers:</h3>
     <ul>
         {% for follower in followers %}
-            <li>{{ follower.username }}</li>
+            <li><a href="{% url 'home' username=follower.username %}">{{ follower.username }}</a></li>
         {% endfor %}
     </ul>
     {% else %}
         <p>Este usuario no tiene seguidores.</p>
     {% endif %}
 </div>
+
+
+
 <!-- Lista de posts en el perfil -->
 <section id="post-list">
-    {% for post in user_posts %}
+    {% for post in posts %}
         <article class="post">
             <!-- Información del post -->
             <h3><a href="{% url 'post_detail' username=post.profile_owner.username post_id=post.id %}">{{ post.title }}</a></h3>
@@ -58,25 +61,25 @@
             {% endif %}
         </article>
     {% endfor %}
+
+    <!-- Formulario para crear un nuevo post (solo para el propietario del muro) -->
+    {% if user_profile == request.user %}
+        <section id="new-post-form">
+            <h2>Crear un nuevo post:</h2>
+            <form method="post" action="" class="post-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title">Title:</label>
+                    {{ post_form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="id_content">Content:</label>
+                    {{ post_form.content }}
+                </div>
+                <button type="submit" class="post-btn">Publicar</button>
+            </form>
+        </section>
+    {% endif %}
 </section>
-
-<!-- Formulario para crear un nuevo post -->
-<section id="new-post-form">
-    <h2>Crear un nuevo post:</h2>
-    <form method="post" action="" class="post-form">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_title">Title:</label>
-            {{ post_form.title }}
-        </div>
-        <div class="form-group">
-            <label for="id_content">Content:</label>
-            {{ post_form.content }}
-        </div>
-        <button type="submit" class="post-btn">Publicar</button>
-    </form>
-</section>
-
-
 
 {% endblock %}
