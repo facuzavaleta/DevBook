@@ -5,12 +5,38 @@
 <!-- Sección de bienvenida al perfil -->
 <section>
     <div class="profile_welcome">
-    <h2>Perfil de {{ username }}</h2>
-    <a href="{% url 'projects_index' username=username %}"><button class="projects-btn">Projects</button></a>
-    <a href="{% url 'user_detail' username=username %}"><button class="projects-btn">Detail</button></a>
+        <h2>Perfil de {{ username }}</h2>
+        <a href="{% url 'projects_index' username=username %}"><button class="projects-btn">Projects</button></a>
+        <a href="{% url 'user_detail' username=username %}"><button class="projects-btn">Detail</button></a>
+
+        {% if user_profile != request.user %}
+            {% if user_profile in request.user.following.all %}
+                <form action="{% url 'toggle_follow' username=username %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Unfollow</button>
+                </form>
+            {% else %}
+                <form action="{% url 'toggle_follow' username=username %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Follow</button>
+                </form>
+            {% endif %}
+        {% endif %}
     </div>
 </section>
 
+<div class="followers-list">
+    {% if followers %}
+    <h3>Followers:</h3>
+    <ul>
+        {% for follower in followers %}
+            <li>{{ follower.username }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Este usuario no tiene seguidores.</p>
+    {% endif %}
+</div>
 <!-- Lista de posts en el perfil -->
 <section id="post-list">
     {% for post in user_posts %}

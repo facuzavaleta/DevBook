@@ -12,9 +12,12 @@ from django.contrib import messages
 @login_required(login_url='login')
 def home_view(request, username):
     user_profile = get_object_or_404(CustomUser, username=username)
-
     user_posts = Post.objects.filter(profile_owner=user_profile).order_by('-created_at')
     post_form = PostForm()
+
+    # Agregamos el manejo de seguir/dejar de seguir
+    is_following = request.user in user_profile.followers.all()
+    followers = user_profile.followers.all()
 
     if request.method == 'POST':
         post_form = PostForm(request.POST)
@@ -25,7 +28,14 @@ def home_view(request, username):
             new_post.save()
             return redirect('home', username=username)
 
-    return render(request, 'users/home.html', {'username': username, 'user_posts': user_posts, 'post_form': post_form, 'user_profile': user_profile})
+    return render(request, 'users/home.html', {
+        'username': username,
+        'user_posts': user_posts,
+        'post_form': post_form,
+        'user_profile': user_profile,
+        'is_following': is_following,
+        'followers': followers,
+    })
 
 def signup_view(request):
     if request.method == 'POST':
@@ -81,3 +91,16 @@ def edit_user(request, username):
         form = EditProfileForm(instance=user)
 
     return render(request, 'users/edit_user.html', {'form': form, 'user': user, 'username': username})
+
+def toggle_follow(request, username):
+    user_to_follow = get_object_or_404(CustomUser, username=username)
+
+    if request.user.is_authenticated:
+        if request.user in user_to_follow.followers.all():
+            # El usuario ya sigue a la persona, así que dejamos de seguir
+            request.user.following.remove(user_to_follow)
+        else:
+            # El usuario no sigue a la persona, así que comenzamos a seguir
+            request.user.following.add(user_to_follow)
+
+    return redirect('home', username=username)
