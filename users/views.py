@@ -117,12 +117,14 @@ def toggle_follow(request, username):
 
     return redirect('home', username=username)
 
+@login_required(login_url='login')
 def followers(request, username):
     user =  get_object_or_404(CustomUser, username=username)
     followers = user.followers.all()
     return render(request, 'users/followers.html', {'followers': followers, 'followers_count': user.followers_count(),
 })
 
+@login_required(login_url='login')
 def followings(request, username):
     user =  get_object_or_404(CustomUser, username=username)
     followings = user.following.all()
