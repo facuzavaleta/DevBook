@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import login_view, signup_view, logout_view, home_view, user_search, edit_user, user_detail, toggle_follow
+from .views import login_view, signup_view, logout_view, home_view, user_search, edit_user, user_detail, toggle_follow, followers, followings
 
 urlpatterns = [
     path('login/', login_view, name='login'),
@@ -10,6 +10,8 @@ urlpatterns = [
     path('<str:username>/detail/', user_detail, name='user_detail'),
     path('<str:username>/edit/', edit_user, name='edit_user'),
     path('<str:username>/toggle_follow/', toggle_follow, name='toggle_follow'),
+    path('<str:username>/followers/', followers, name='followers'),
+    path('<str:username>/followings/', followings, name='followings'),
     path('<str:username>/posts/', include('posts.urls')),
     path('<str:username>/projects/', include('projects.urls')),
 ]

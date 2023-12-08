@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    {% if followings %}
+        <h1>Followings ({{ following_count }})</h1>
+        <ul>
+            {% for following in followings %}
+                <li><a href="{% url 'home' username=following.username %}">{{ following.username }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>This user has no followings</p>
+    {% endif %}
+{% endblock %}

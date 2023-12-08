@@ -26,24 +26,10 @@
 </section>
 
 <div class="followers-list">
-    <h3>Followers:</h3>
-    {% if followers %}
-        <ul>
-            {% for follower in followers %}
-                <li><a href="{% url 'home' username=follower.username %}">{{ follower.username }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <ul>
-            <li><p>Este usuario no tiene seguidores.</p></li>
-        </ul>
-    {% endif %}
-
     <ul>
-        <li><p>Seguidores: {{ followers_count }}</p></li>
-        <li><p>Siguiendo: {{ following_count }}</p></li>
+        <li><a href="{% url 'followers' username=username %}">Seguidores: {{ followers_count }}</a></li>
+        <li><a href="{% url 'followings' username=username %}">Siguiendo: {{ following_count }}</a></li>
     </ul>
-
 </div>
 
 
