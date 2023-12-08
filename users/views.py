@@ -45,6 +45,8 @@ def home_view(request, username):
         'user_profile': user_profile,
         'is_following': is_following,
         'followers': followers,
+        'followers_count': user_profile.followers_count(),
+        'following_count': user_profile.following_count(),
     })
 
 def signup_view(request):
