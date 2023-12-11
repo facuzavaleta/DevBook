@@ -114,8 +114,11 @@ def toggle_follow(request, username):
         else:
             # El usuario no sigue a la persona, así que comenzamos a seguir
             request.user.following.add(user_to_follow)
-
-    return redirect('home', username=username)
+            
+    if 'followings' in request.path:
+        return redirect('followings', username=username)
+    else:
+        return redirect('home', username=username)
 
 @login_required(login_url='login')
 def followers(request, username):
