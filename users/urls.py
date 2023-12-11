@@ -14,4 +14,5 @@ urlpatterns = [
     path('<str:username>/followings/', followings, name='followings'),
     path('<str:username>/posts/', include('posts.urls')),
     path('<str:username>/projects/', include('projects.urls')),
+    path('<str:username>/notifications/', include('notifications.urls')),
 ]
