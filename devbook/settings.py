@@ -140,12 +140,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.google.GoogleOAuth',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.github.GithubOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',    
+    # 'social_core.backends.open_id.OpenIdAuth',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.google.GoogleOAuth',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.github.GithubOAuth2',
 )
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
@@ -153,4 +153,4 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_GITHUB_KEY = '8ceb2af3096a401893a2'
 SOCIAL_AUTH_GITHUB_SECRET = '6ac60683c05f77ef1c73f189af2936d219752a39'
 SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'http://127.0.0.1:8000/'
-LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
