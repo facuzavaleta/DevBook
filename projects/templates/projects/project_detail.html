@@ -37,11 +37,13 @@
 <p>No hay comentarios</p>
 {% endif %}
 
+{% if project.user == request.user or request.user in project.user.followers.all %}
 <h3>Agregar comentario:</h3>
 <form method="post" action="{% url 'project_detail' username=username project_id=project.id %}" class="comment-form">
     {% csrf_token %}
     {{ projectcomment_form.as_p }}
     <button type="submit" class="comment-btn">Comentar</button>
 </form>
+{% endif %}
 
 {% endblock %}

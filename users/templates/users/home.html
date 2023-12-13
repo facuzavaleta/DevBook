@@ -9,6 +9,10 @@
         <a href="{% url 'projects_index' username=username %}"><button class="projects-btn">Projects</button></a>
         <a href="{% url 'user_detail' username=username %}"><button class="projects-btn">Detail</button></a>
 
+        {% if user_profile == request.user %}
+        <a href="{% url 'notifications_index' username=username%}">Notifications</a>
+        {% endif %}
+
         {% if user_profile != request.user %}
             {% if user_profile in request.user.following.all %}
                 <form action="{% url 'toggle_follow' username=username %}" method="post">
@@ -32,7 +36,6 @@
     </ul>
 </div>
 
-<a href="{% url 'notifications_index' username=username%}">Notifications</a>
 <!-- Lista de posts en el perfil -->
 <section id="post-list">
     {% for post in posts %}

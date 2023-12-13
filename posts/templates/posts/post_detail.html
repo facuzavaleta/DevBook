@@ -45,6 +45,7 @@
     {% endif %}
 </section>
 
+{% if post.posted_by == request.user or request.user in post.posted_by.followers.all %}
 <!-- Formulario para agregar un nuevo comentario -->
 <section id="new-comment-form">
     <h3>Agregar Comentario:</h3>
@@ -54,5 +55,6 @@
         <button type="submit" class="comment-btn">Comentar</button>
     </form>
 </section>
+{% endif %}
 
 {% endblock %}
