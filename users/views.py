@@ -7,13 +7,13 @@ from .models import CustomUser
 from django.contrib.auth.decorators import login_required
 from posts.forms import PostForm
 from posts.models import Post
-from django.contrib import messages
 from django.db.models import Q
+from notifications.models import notification
 
 @login_required(login_url='login')
 def home_view(request, username):
     user_profile = get_object_or_404(CustomUser, username=username)
-
+    unread_notifications = notification.objects.filter(user=request.user, is_read=False)
     if user_profile == request.user:
         # Si el usuario está viendo su propio perfil, mostrar sus propios posts y los de los usuarios seguidos
         posts = Post.objects.filter(
@@ -35,6 +35,10 @@ def home_view(request, username):
             new_post = post_form.save(commit=False)
             new_post.posted_by = request.user
             new_post.profile_owner = user_profile
+
+            # create notification
+            notification.objects.create(user=request.user, message="New post created")
+
             new_post.save()
             return redirect('home', username=username)
 
@@ -47,6 +51,7 @@ def home_view(request, username):
         'followers': followers,
         'followers_count': user_profile.followers_count(),
         'following_count': user_profile.following_count(),
+        'notifications_count': unread_notifications.count(),
     })
 
 def signup_view(request):

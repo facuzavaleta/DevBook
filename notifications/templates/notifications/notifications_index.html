@@ -1,4 +1,23 @@
 {% extends "base.html" %}
 {% block page_content %}
-<h1>Notifications</h1>
+    <h1>Notifications</h1>
+    {% if unread_notifications %}
+        <h2>New Notifications</h2>
+        <ul>
+            {% for notification in unread_notifications %}
+                <li>{{ notification.message }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No new notifications</p>
+    {% endif %}
+
+    <h2>Old Notifications</h2>
+    <ul>
+        {% for notification in notifications %}
+            {% if notification.is_read %}
+                <li>{{ notification.message }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
 {% endblock %}

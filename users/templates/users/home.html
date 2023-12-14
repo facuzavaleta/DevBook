@@ -10,7 +10,7 @@
         <a href="{% url 'user_detail' username=username %}"><button class="projects-btn">Detail</button></a>
 
         {% if user_profile == request.user %}
-        <a href="{% url 'notifications_index' username=username%}">Notifications</a>
+        <a href="{% url 'notifications_index' username=username%}">Notifications({{ notifications_count }})</a>
         {% endif %}
 
         {% if user_profile != request.user %}
