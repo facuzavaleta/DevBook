@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'posts',
     'projects',
     'notifications',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'devbook.urls'
@@ -151,7 +152,11 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-SOCIAL_AUTH_GITHUB_KEY = '8ceb2af3096a401893a2'
-SOCIAL_AUTH_GITHUB_SECRET = '6ac60683c05f77ef1c73f189af2936d219752a39'
-SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'http://127.0.0.1:8000/'
-# LOGIN_REDIRECT_URL = '/'
+# SOCIAL_AUTH_GITHUB_KEY = '8ceb2af3096a401893a2'
+# SOCIAL_AUTH_GITHUB_SECRET = '6ac60683c05f77ef1c73f189af2936d219752a39'
+# SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'http://127.0.0.1:8000/'
+# # LOGIN_REDIRECT_URL = '/'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
